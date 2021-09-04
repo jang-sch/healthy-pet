@@ -1,12 +1,9 @@
 # healthy-pet
 
 ## Overview
-A pet health app that will allow the user to keep track of their pet's health and life. The app will keep track medications, eating habits, exercise habits, vaccination and immunization records, veterinarian appointments, behavior or changes in behavior, and general health.
+A pet health app that will allow the user to keep track of their pet's health and life. The app will keep track medications, eating habits, exercise habits, vaccination and immunization records, veterinarian appointments, behavior or changes in behavior, and general health. For a variety of different pets including dogs, cats, rodents, lizards, and exotics of differing breed and ages, can upload profile picture of pet.
 
-## Features
-* For a variety of different pets including dogs, cats, rodents, lizards, and exotics of differing breed and ages, can upload profile picture of pet.
-
-### Health
+## Health
 
 * Veterinarian Information
   * Past appointments
@@ -22,7 +19,7 @@ A pet health app that will allow the user to keep track of their pet's health an
 
 * Symptom Tracker
 
-### Lifestyle
+## Lifestyle
 
 * Eating
   * Eating Habits
@@ -33,14 +30,13 @@ A pet health app that will allow the user to keep track of their pet's health an
 
 * Behaviors
 
-### Other
+## Other
 * Resources
   * Local Veterinarians
   * Local Urgent Cares
   * Local Animal Emergency Care
   * Poison Control Numbers
 
-### Other II
 * Pet information is stored in remote database
 * Export whole or parts of pet record as pdf
 * Allow for temporary access to pet profiles for pet sitters via the app
