@@ -40,3 +40,6 @@ A pet health app that will allow the user to keep track of their pet's health an
 * Pet information is stored in remote database
 * Export whole or parts of pet record as pdf
 * Allow for temporary access to pet profiles for pet sitters via the app
+
+## Security
+*Implement security for records and comply with animal Hippa laws. 
