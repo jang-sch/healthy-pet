@@ -9,25 +9,25 @@ A pet health app that will allow the user to keep track of their pet's health an
 ### Health
 
 * Veterinarian Information
-** Past appointments
-** Upcoming appointments reminders
+  * Past appointments
+  * Upcoming appointments reminders
 
 * Medication management
-** Medication schedule
-** Medication symptoms/reactions
+  * Medication schedule
+  * Medication symptoms/reactions
 
 * Vaccination and Immunication
-** Records
-** Future upcoming immunizations
+  * Records
+  * Future upcoming immunizations
 
 * Symptom Tracker
 
 ### Lifestyle
 
 * Eating
-** Eating Habits
-** Portions
-** Weight
+  * Eating Habits
+  * Portions
+  * Weight
 
 * Exercise Habits
 
@@ -35,10 +35,10 @@ A pet health app that will allow the user to keep track of their pet's health an
 
 ### Other
 * Resources
-** Local Veterinarians
-** Local Urgent Cares
-** Local Animal Emergency Care
-** Poison Control Numbers
+  * Local Veterinarians
+  * Local Urgent Cares
+  * Local Animal Emergency Care
+  * Poison Control Numbers
 
 ### Other II
 * Pet information is stored in remote database
