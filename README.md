@@ -6,6 +6,7 @@ A pet health app that will allow the user to keep track of their pet's health an
 ## Health
 
 * Veterinarian Information
+  * Preferred veterinarian/primary vet
   * Past appointments
   * Upcoming appointments reminders
 
@@ -13,7 +14,7 @@ A pet health app that will allow the user to keep track of their pet's health an
   * Medication schedule
   * Medication symptoms/reactions
 
-* Vaccination and Immunication
+* Vaccination and Immunization
   * Records
   * Future upcoming immunizations
 
@@ -43,6 +44,7 @@ A pet health app that will allow the user to keep track of their pet's health an
 * Export whole or parts of pet record as pdf
 * Allow for temporary access to pet profiles for pet sitters via the app
 * Able to create multiple pet profiles 
+* For both Android and Apple
 
 ## Security
-*Implement security for records and comply with animal Hippa laws. 
+* Implement security for records and comply with animal HIPAA laws.
