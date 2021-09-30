@@ -20,7 +20,6 @@ A pet health app that will allow the user to keep track of their pet's health an
 
 * Symptom Tracker
 
-* Voiding Habits
 
 ## Lifestyle
 
@@ -28,6 +27,9 @@ A pet health app that will allow the user to keep track of their pet's health an
   * Eating Habits
   * Portions
   * Weight
+ 
+
+* Voiding Habits
 
 * Exercise Habits
 
