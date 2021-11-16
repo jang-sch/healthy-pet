@@ -53,6 +53,7 @@ A pet health app that will allow the user to keep track of their pet's health an
 
 ## Environment Setup
 1.Go to https://nodejs.org/en/download/ and download the LTS version of Node
+
 2.Install Git on your system: https://git-scm.com/download/win. When you install Git for Windows this will also include the GitBash terminal, which is what we would suggest using in this course. Since it is a bash emulator, it will allow you to type the same commands that Stephen types even though he is using a terminal on macOS.
 3.Download the boilerplate rn-starter file
 4.Open your Windows File Explorer and go to the Downloads directory.
