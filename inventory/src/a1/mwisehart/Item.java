@@ -58,6 +58,6 @@ public class Item
     @Override
     public String toString()
     {
-        return String.format("| %-20s | $%-10.2f | %-6d |", this.name, this.price, this.qty);
+        return String.format("| %-20s | $%-10.2f | %-6d | ", this.name, this.price, this.qty);
     }
 }

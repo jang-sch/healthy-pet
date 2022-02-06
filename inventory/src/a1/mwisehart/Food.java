@@ -28,6 +28,6 @@ public class Food extends Consumable
     @Override
     public String toString()
     {
-        return String.format("%s, %20.2f, |", super.toString(), this.healthGain);
+        return String.format("%s %20.2f |", super.toString(), this.healthGain);
     }
 }
