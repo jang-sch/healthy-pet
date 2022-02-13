@@ -11,7 +11,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         Random ran = new Random();
 
-        System.out.println("Do you want a [S]ingle sort or a [D]ual sort? ");
+        System.out.println("Do you want a [S]ingle sort [D]ual sort or [Q]uad sort? ");
         char selection = scan.next().charAt(0);
 
         System.out.println("How many items do you want to sort? ");
@@ -45,10 +45,71 @@ public class Main {
             case 'd':
             case 'D':
                 DualSort(items);
+                break;
+            case 'q':
+            case 'Q':
+                QuadSort(items);
+                break;
 
         }
 
         //print
+    }
+
+    public static void QuadSort(Item[] items) throws InterruptedException {
+
+        //splitting array the first time
+        int firstSplit = Math.round(items.length / 4f);
+        //splitting the split array one more time
+        int secondSplit = Math.round(items.length / 2f);
+
+        int thirdSplit = Math.round(items.length);
+
+        //making a new ThreadSort for each new split part
+        ThreadSort t1 = new ThreadSort(items, 0, firstSplit);
+        ThreadSort t2 = new ThreadSort(items, firstSplit, secondSplit);
+        ThreadSort t3 = new ThreadSort(items, secondSplit, items.length);
+        ThreadSort t4 = new ThreadSort(items, thirdSplit, items.length);
+
+        long startTime = System.nanoTime();
+
+        //starting t1 threads
+        t1.start();
+        t2.start();
+        t3.start();
+        t4.start();
+
+        //joining t1 threads
+        t1.join();
+        t2.join();
+        t3.join();
+        t4.join();
+
+
+        MergeSort m1 = new MergeSort(t1.gettItems(), t2.gettItems());
+        MergeSort m2 = new MergeSort(t3.gettItems(), t4.gettItems());
+        MergeSort m3 = new MergeSort(m1.getSortedItems(), m2.getSortedItems());
+
+        m1.start();
+        m1.join();
+        m2.start();
+        m2.join();
+
+        m3.start();
+        m3.join();
+
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1000000;
+
+        for(Item i : m3.getSortedItems())
+        {
+            System.out.println(i);
+        }
+        System.out.println("Quad sort took: " + duration);
+
+
+
     }
 
     private static void DualSort(Item[] items) throws InterruptedException {

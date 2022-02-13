@@ -21,7 +21,7 @@ public class ThreadSort extends Thread
         System.out.println("Thread started");
         int n = this.tItems.length;
         Item tmp;
-        for(int i = 0; i< n; i++)
+        for(int i = 0; i < n; i++)
         {
             for(int j = 1; j < n; j++)
             {
