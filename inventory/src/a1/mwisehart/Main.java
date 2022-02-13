@@ -66,7 +66,7 @@ public class Main
     {
         int lordranItemIndex = ran.nextInt(lordranItemList.length);
         String lordranItemName = lordranItemList[lordranItemIndex].toString();
-        double itemPrice = ran.nextInt(5000);
+        double itemPrice = ran.nextInt(1000);
         int itemQty = ran.nextInt(5);
         String uses = lordranItemUses[lordranItemIndex].toString();
         return new LordranItems(lordranItemName, itemPrice, itemQty, uses);
