@@ -1,0 +1,9 @@
+.label
+{
+    -fx-padding: 10px;
+}
+.list-view
+{
+    -fx-padding: 10px;
+    -fx-font-family: "monospace";
+}
