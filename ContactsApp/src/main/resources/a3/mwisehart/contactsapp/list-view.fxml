@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a3.mwisehart.contactsapp.ListViewController">
+<VBox fx:id="vboxMain" prefHeight="700.0" prefWidth="800.0" stylesheets="@Default.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="a3.mwisehart.contactsapp.ListViewController">
    <children>
       <MenuBar>
         <menus>
@@ -18,8 +18,9 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Theme">
             <items>
-              <MenuItem mnemonicParsing="false" text="Default" />
-                  <MenuItem mnemonicParsing="false" text="Blue" />
+              <MenuItem fx:id="btnThemeDefault" mnemonicParsing="false" onAction="#onThemeChange" text="Default" />
+                  <MenuItem fx:id="btnThemeBlue" mnemonicParsing="false" onAction="#onThemeChange" text="Blue" />
+                  <MenuItem fx:id="btnThemeUnit02" mnemonicParsing="false" onAction="#onThemeChange" text="unit01" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -29,7 +30,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <GridPane fx:id="newContact">
+      <GridPane fx:id="newContact" styleClass="grid-pane">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" />

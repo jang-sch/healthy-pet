@@ -1,0 +1,43 @@
+.menu:hover, .menu:showing, .menu-items:focused
+{
+    -fx-background-color: #d3290f;
+}
+
+.menu-bar, .context-menu
+{
+    -fx-background-color: #15282b;
+}
+
+.menu, .label
+{
+    -fx-text-fill: #ffff;
+}
+
+.vbox, .list-view, .grid-pane, .button
+{
+    -fx-background-color: #273c51;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected
+{
+    -fx-background-color: #506f8d;
+    -fx-text-fill: #e3e2e0;
+}
+
+.list-cell:odd
+{
+    -fx-background-color: #6a9ac8;
+}
+
+.list-cell:even
+{
+    -fx-background-color: #7badb9;
+}
+
+
+
+.grid-pane .label
+{
+    -fx-text-fill: #fff;
+}
+
