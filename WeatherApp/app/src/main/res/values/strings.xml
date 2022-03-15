@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="lab_location">Location:</string>
+    <string name="Lab_latitude">Latitude:</string>
+    <string name="Lab_longitude">Longitude:</string>
+    <string name="Lab_high">High:</string>
+    <string name="Lab_low">Low:</string>
+    <string name="Lab_current">Current:</string>
+    <string name="Lab_feels_like">Feels Like:</string>
+    <string name="Lab_humidity">Humidity:</string>
+    <string name="Lab_pressure">Pressure:</string>
+
+
+    <string-array name="Locations">
+        <item>Bakersfield,CA,USA</item>
+        <item>Las Vegas,NV,USA</item>
+        <item>Kalispell,MT,USA</item>
+        <item>New York,NY,USA</item>
+        <item>Orlando,FL,USA</item>
+        <item>Anchorage,AK,USA</item>
+        <item>Zug,EH</item>
+    </string-array>
+
+</resources>
