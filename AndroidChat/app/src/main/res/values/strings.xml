@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AndroidChat</string>
+    <string name="name">Name</string>
+    <string name="login">Login</string>
+    <string name="cmps3390">CMPS3390 Chat</string>
+    <string name="people_online">People Online</string>
+    <string name="message">message</string>
+</resources>
