@@ -1,5 +1,4 @@
 package a6.mwisehart.fxchat.fxchat;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -76,3 +75,4 @@ public class Client
         clientListener.start();
     }
 }
+

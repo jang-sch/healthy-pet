@@ -1,5 +1,5 @@
 package a7.mwisehart.androidchat;
-//13:19
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
