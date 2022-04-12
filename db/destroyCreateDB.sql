@@ -8,15 +8,14 @@
 
 -- drop tables starting with leaves
 DROP TABLE IF EXISTS vaccPerSpecies;
--- add medicalConditions here when done
--- add vetFacility here when done
+DROP TABLE IF EXISTS medicalConditions;
+DROP TABLE IF EXISTS vetFacility;
 DROP TABLE IF EXISTS genHealth;
 DROP TABLE IF EXISTS medications;
 DROP TABLE IF EXISTS dailyHealth;
 DROP TABLE IF EXISTS pet;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS species;
--- add medicalConditions here when done
 
 -- referenced by 'pet' and 'vaccPerSpecies' tables, 
 CREATE TABLE `species` (
@@ -101,11 +100,28 @@ CREATE TABLE `genHealth` (
   CONSTRAINT `genHealth_ibfk_1` FOREIGN KEY (`petID`) REFERENCES `pet` (`petID`)
 );
 
--- medicalConditions(in progress)
+-- 'medicalConditions' used to store any medical conditions a pet may have
+CREATE TABLE medicalConditions ( 
+  petID INT UNSIGNED NOT NULL, 
+  conditionID INT UNSIGNED NOT NULL AUTO_INCREMENT, 
+  conditionName VARCHAR(40), 
+  description VARCHAR(300), 
+  FOREIGN KEY(petID) REFERENCES pet(petID), 
+  PRIMARY KEY(conditionID) 
+); 
 
-
--- vetFacility(in progress)
-
+-- 'vetFacility' is the table used to store the pet's preferred vet office's information
+CREATE TABLE vetFacility ( 
+  vetFacID INT UNSIGNED NOT NULL AUTO_INCREMENT, 
+  petID INT UNSIGNED NOT NULL, 
+  facilityName VARCHAR(60), 
+  address VARCHAR(80), 
+  phone INT UNSIGNED, 
+  website VARCHAR(100), 
+  notes VARCHAR(300), 
+  FOREIGN KEY(petID) REFERENCES pet(petID), 
+  PRIMARY KEY(vetFacID) 
+); 
 
 /*'vaccPerSpecies' to be referenced by petVacc table to determine valid vaccines per species 
  * immutable by users, referenced by petVacc */
