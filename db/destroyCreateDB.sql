@@ -78,7 +78,7 @@ ALTER TABLE dailyHealth AUTO_INCREMENT= 1000;
 CREATE TABLE `medications` (
   `petID` int(10) unsigned NOT NULL,
   `medID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `medName` varchar(60) DEFAULT NULL,
+  `medName` varchar(60) NOT NULL,
   `medNotes` varchar(300) DEFAULT NULL,
   `prescriber` varchar(60) DEFAULT NULL,
   `frequency` varchar(60) DEFAULT NULL,
@@ -114,8 +114,8 @@ CREATE TABLE medicalConditions (
 CREATE TABLE vetFacility ( 
   vetFacID INT UNSIGNED NOT NULL AUTO_INCREMENT, 
   petID INT UNSIGNED NOT NULL, 
-  facilityName VARCHAR(60), 
-  address VARCHAR(80), 
+  facilityName VARCHAR(60) NOT NULL, 
+  address VARCHAR(80) NOT NULL, 
   phone INT UNSIGNED, 
   website VARCHAR(100), 
   notes VARCHAR(300), 
