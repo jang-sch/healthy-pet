@@ -62,3 +62,10 @@ BEGIN
 	WHERE
 END;
 
+-- view list of vaccines 
+CREATE OR REPLACE PROCEDURE getVaccList (animalID int(10)) 
+BEGIN 
+	SELECT vaccName 
+	FROM list_vacc_view 
+	WHERE speciesID = animalID; 
+END; 
