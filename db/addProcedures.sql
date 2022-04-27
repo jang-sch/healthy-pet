@@ -6,7 +6,7 @@ BEGIN
     WHERE email = em; 
 
     IF @emailCount > 0 THEN 
-		SELECT NULL as userID, "Email already exists" AS 'Error'; 
+	SELECT NULL as userID, "Email already exists" AS 'Error'; 
     ELSE 
         INSERT INTO user (userName, email, password) VALUES (uname, em, pword); 
         SELECT userID AS userID, NULL as 'Error' FROM user WHERE email=em; 
@@ -21,10 +21,10 @@ BEGIN
     WHERE userID = usrID; 
 
     IF @userCount < 1 THEN 
-		SELECT NULL as petID, "User does not exist!" AS 'Error'; 
+	SELECT NULL as petID, "User does not exist!" AS 'Error'; 
     ELSE 
         INSERT INTO pet (userID, petName, speciesID, birthDate, sex, microchipNum, petPic) VALUES (usrID,name, species, birthday, sx, mcNum, pic); 
-        SELECT petID AS petID, NULL as 'Error' FROM user WHERE userID=usrID; 
+        SELECT petID AS petID, NULL as 'Error' FROM pet WHERE userID=usrID AND petName = name; 
     END IF; 
 END; 
 
@@ -40,11 +40,11 @@ BEGIN
     WHERE petID = pID; 
 
     IF @userCount < 1 THEN 
-		SELECT NULL as usrID, "Event does not exist!" AS 'Error'; 
+	SELECT NULL as usrID, "Event does not exist!" AS 'Error'; 
     ELSEIF @petCount < 1 AND pID IS NOT NULL THEN
-		SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
+	SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
     ELSE 
-		INSERT INTO calendar(userID, petID, date, freeText) VALUES (usrID, pID, day, notes); 
+	INSERT INTO calendar(userID, petID, date, freeText) VALUES (usrID, pID, day, notes); 
     END IF; 
 END; 
 
@@ -56,9 +56,9 @@ BEGIN
     WHERE petID = pID; 
 	
     IF @petCount < 1 AND pID IS NOT NULL THEN
-		SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
+	SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
     ELSE 
-		INSERT INTO medications(petID, medName, medNotes, prescriber, frequency, alarm) VALUES (pID, name, notes, ps, freq, alrm); 
+	INSERT INTO medications(petID, medName, medNotes, prescriber, frequency, alarm) VALUES (pID, name, notes, ps, freq, alrm); 
     END IF; 
 END; 
 
@@ -70,9 +70,9 @@ BEGIN
     WHERE petID = pID; 
 
     IF @petCount < 1 AND pID IS NOT NULL THEN 
-		SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
+	SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
     ELSE 
-		INSERT INTO dailyHealth(petID, logDay, eatingHabits, treat, vomit, urineHabits, poopHabits, exercise, sleepHabits, dayNote) VALUES (pID, food, snack, throwup, pee, bathroom, play, sleep, notes); 
+	INSERT INTO dailyHealth(petID, logDay, eatingHabits, treat, vomit, urineHabits, poopHabits, exercise, sleepHabits, dayNote) VALUES (pID, food, snack, throwup, pee, bathroom, play, sleep, notes); 
     END IF; 
 END; 
 
@@ -84,9 +84,9 @@ BEGIN
     WHERE petID = pID; 
  
     IF @petCount < 1 AND pID IS NOT NULL THEN 
-		SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
+	SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
     ELSE 
-		INSERT INTO genHealth(petID, weight, foodNote, aboutMe) VALUES (pID, w, fNote, petInfo); 
+	INSERT INTO genHealth(petID, weight, foodNote, aboutMe) VALUES (pID, w, fNote, petInfo); 
     END IF; 
 END; 
 
@@ -98,9 +98,9 @@ BEGIN
     WHERE petID = pID; 
 
     IF @petCount < 1 AND pID IS NOT NULL THEN 
-		SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
+	SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
     ELSE 
-		INSERT INTO medicalConditions(petID, conditionName, description) VALUES (pID, name, descr); 
+	INSERT INTO medicalConditions(petID, conditionName, description) VALUES (pID, name, descr); 
     END IF; 
 END; 
 
@@ -112,9 +112,9 @@ BEGIN
     WHERE petID = pID; 
 
     IF @petCount < 1 AND pID IS NOT NULL THEN 
-		SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
+	SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
     ELSE 
-		INSERT INTO vetFacility(petID,  facilityName, address, phone, website, notes) VALUES (pID, name, addy, number, site, note); 
+	INSERT INTO vetFacility(petID,  facilityName, address, phone, website, notes) VALUES (pID, name, addy, number, site, note); 
     END IF; 
 END; 
 
@@ -126,8 +126,8 @@ BEGIN
     WHERE petID = pID; 
  
     IF @petCount < 1 AND pID IS NOT NULL THEN 
-		SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
+	SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
     ELSE 
-		INSERT INTO petVacc(petID, vaccDate, vaccNote) VALUES (pID, day, notes); 
+	INSERT INTO petVacc(petID, vaccDate, vaccNote) VALUES (pID, day, notes); 
     END IF; 
 END; 
