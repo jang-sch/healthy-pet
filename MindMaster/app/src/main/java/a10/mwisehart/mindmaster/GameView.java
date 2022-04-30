@@ -1,5 +1,5 @@
 package a10.mwisehart.mindmaster;
-//35:40
+//30:42
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;

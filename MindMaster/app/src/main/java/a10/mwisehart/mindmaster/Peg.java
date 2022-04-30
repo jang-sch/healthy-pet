@@ -42,6 +42,10 @@ public class Peg {
         }
     }
 
+    public Point getPos() {
+        return pos;
+    }
+
     private void pegClicked() {
         selectedPaint = (selectedPaint + 1) % paints.size();
     }
