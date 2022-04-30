@@ -69,3 +69,11 @@ BEGIN
 	FROM list_vacc_view 
 	WHERE speciesID = animalID; 
 END; 
+
+-- view list of user's pets
+CREATE OR REPLACE PROCEDURE getUserPets (usrID int(10))
+BEGIN 
+	SELECT petPic, petName
+	FROM user_pet_profiles
+	WHERE userID = usrID;
+END;
