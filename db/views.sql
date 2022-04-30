@@ -67,3 +67,8 @@ FROM vetFacility;
 CREATE OR REPLACE VIEW list_vacc_view  
   AS SELECT speciesID, vaccName 
 FROM vaccPerSpecies; 
+
+-- a view for to display all pets a user has
+CREATE OR REPLACE VIEW user_pet_profiles
+  AS SELECT userID, petName, petPic
+FROM pet;
