@@ -18,7 +18,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     public GameView(Context context, Point screenSize) {
         super(context);
-        board = new Board(screenSize, getResources());
+        board = new Board(screenSize, getResources(), (GameActivity)context);
     }
 
     @Override

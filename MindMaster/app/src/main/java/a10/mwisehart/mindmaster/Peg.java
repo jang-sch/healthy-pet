@@ -24,7 +24,7 @@ public class Peg {
         paints.get(2).setARGB(255,0,0,255); //blue rgbcode
         paints.get(3).setARGB(255,0,255,0); //green rgbcode
         paints.get(4).setARGB(255,255,255,0); //yellow rgbcode
-        paints.get(5).setARGB(255,25,165,0); //orange rgbcode
+        paints.get(5).setARGB(255,255,165,0); //orange rgbcode
         this.radius = radius;
         this.pos = pos;
     }
