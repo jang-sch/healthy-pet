@@ -105,7 +105,7 @@ BEGIN
 END; 
 
 -- add an entry for a pet's preferred vet facility 
-CREATE OR REPLACE PROCEDURE addVetFac (pID int(10), name varchar(60), addy varchar(80), number int(10), site varchar(100), note varchar(300)) 
+CREATE OR REPLACE PROCEDURE addVetFac (pID int(10), name varchar(60), addy varchar(80), number varchar(15), site varchar(100), note varchar(300)) 
 BEGIN 
     SELECT COUNT(*) INTO @petCount 
     FROM pet 
