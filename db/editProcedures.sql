@@ -145,7 +145,7 @@ BEGIN
 END; 
 
 -- edit a vet clinic entry
-CREATE OR REPLACE PROCEDURE editVet (vID int(10), pID int(10), name varchar(60), addy varchar(80), number int(10), site varchar(100), note varchar(300)) 
+CREATE OR REPLACE PROCEDURE editVet (vID int(10), pID int(10), name varchar(60), addy varchar(80), number varchar(15), site varchar(100), note varchar(300)) 
 BEGIN 
 	SELECT COUNT(*) INTO @petCount 
     FROM pet 
