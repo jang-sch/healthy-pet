@@ -119,7 +119,7 @@ BEGIN
 END; 
 
 -- add a vaccination entry for a pet
-CREATE OR REPLACE PROCEDURE addPetVacc (pID int(10), day date, notes varchar(150)) 
+CREATE OR REPLACE PROCEDURE addPetVacc (pID int(10), vID int(10), day date, notes varchar(150)) 
 BEGIN  
     SELECT COUNT(*) INTO @petCount 
     FROM pet 
@@ -128,6 +128,6 @@ BEGIN
     IF @petCount < 1 AND pID IS NOT NULL THEN 
 	SELECT NULL as pID, "Pet does not exist!" AS 'Error'; 
     ELSE 
-	INSERT INTO petVacc(petID, vaccDate, vaccNote) VALUES (pID, day, notes); 
+	INSERT INTO petVacc(petID, vaccID, vaccDate, vaccNote) VALUES (pID, vID, day, notes); 
     END IF; 
 END; 
