@@ -70,5 +70,6 @@ FROM vaccPerSpecies;
 
 -- a view for to display all pets a user has
 CREATE OR REPLACE VIEW user_pet_profiles
-  AS SELECT userID, petName, petPic
-FROM pet;
+  AS SELECT userID, petName, species.speciesName, petPic
+FROM pet
+INNER JOIN species ON species.speciesID = pet.speciesID;
