@@ -73,7 +73,7 @@ END;
 -- view list of user's pets
 CREATE OR REPLACE PROCEDURE getUserPets (usrID int(10))
 BEGIN 
-	SELECT petPic, petName
+	SELECT petPic, petName, speciesName
 	FROM user_pet_profiles
 	WHERE userID = usrID;
 END;
