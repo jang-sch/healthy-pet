@@ -32,7 +32,7 @@ if (isset($_POST["createAccount"])) {
 }
 
 /* branch handles LOGGING IN. React Native Client sends POST variables: 
- * "login", username, email, password */
+ * "login", username, email, password. returns mesage and pet json array */
 elseif (isset($_POST["login"])) {
     header("Content-type: application/json");
     unset($_POST["login"]);
@@ -44,14 +44,14 @@ elseif (isset($_POST["login"])) {
     // verify required data prior to calling function/establishing connection
     if ($password == null || $em == null) {
         //echo json_encode($userID);
-        echo json_encode(array("error" => "CANNOT LOGIN, no email/password sent"));
+        echo json_encode(array("message" => "ERROR: CANNOT LOGIN, no email/password sent"));
         return;
     } else {
-        // returns json encoded array for now
-        loginUser();
+        // if login is successful, let client know (message may be removed later)
+        if(loginUser()) {
+            echo json_encode(array("message" => "Login Successful"));
+        }
     }
-
-    //echo json_encode("at the login end"); //debug
 }
 
 /* branch handles creation of new PET profile. React Native Client sends 
@@ -60,6 +60,8 @@ elseif (isset($_POST["login"])) {
 elseif (isset($_POST["createPet"])) {
     header("Content-type: application/json");
     unset($_POST["createPet"]);
+
+    // note: future plan incorporate session creds
 
     $userID = $_POST["userID"];
 
@@ -80,7 +82,7 @@ elseif(isset($_POST["userProfile"])) {
     header("Content-type: application/json");
     unset($_POST["userProfile"]);
     // echos back keys petName, ageYears, speciesName, sex, as json encoded array
-    //petHeader();
+    displayUserProfile();
 }
 
 /* branch handles obtaining pet header banner. React Native Client sends 
