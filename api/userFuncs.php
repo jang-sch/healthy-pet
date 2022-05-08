@@ -146,7 +146,7 @@ function loginUser() {
         $rows = [];
         while($row = $userPets->fetch_assoc()) {
             $rows [] = $row;
-            echo $row;
+            //echo $row;
         }
         
         // temp sanity check
@@ -330,12 +330,62 @@ function addDailyHealth() {
  *      alarm time -- NULL for now 
  *      
  *  returns to main API --> Client:
+ *      JSON encoded array
  * 
  *  interacts with databse:
+ *      stored database procedure addMed(...) 
  *  
  */
 function addMed() {
+    $conn = getConnection();
+    
+    $med_data["petID"] = $_POST["petID"];
+    $med_data["medName"] = $_POST["medName"];
+    $med_data["medNotes"] = $_POST["medNotes"];
+    $med_data["prescriber"] = $_POST["prescriber"];
+    $med_data["frequency"] = $_POST["frequency"];
+    $med_data["alarm"] = $_POST["alarm"];
 
+    // if any POST variables were empty strings, convert to NULL in order
+    // to properly call the addMed procedure on database
+    foreach($med_data as $key => $val) {
+        //echo $key." is ".$val."\n";
+        if ($val == ""|| $val == NULL) {
+            $med_data[$key] = NULL;
+        }
+        //echo $key." issss ".$val."\n";
+    }
+
+    // ready to start prepping query
+    $addMedQuery = $conn->prepare("CALL addMed(?, ?, ?, ?, ?, ?)");
+
+    // bind parameters, 's' for strings, 'i' for integers
+    $addMedQuery->bind_param("isssss", 
+        $med_data["petID"], 
+        $med_data["medName"], 
+        $med_data["medNotes"],
+        $med_data["prescriber"],
+        $med_data["frequency"],
+        $med_data["alarm"]);
+
+    // now execute prepared stament
+    if($addMedQuery->execute()){
+        //echo json_encode(array("testmssg" => "testing123")); // for debugging
+        // binding results to local variables so can fetch them and see if null
+        mysqli_stmt_bind_result($addMedQuery, $res_error);
+        $addMedQuery->fetch();
+
+
+        // do we have successful registratation--> check for duplicate email
+        if (is_null($res_id)) {
+            // error code/error message from the database
+            echo json_encode(array("error" => $res_error));
+            return;
+        }
+
+    } else {
+        echo json_encode(array("message" => "ERROR: an error occurred adding medication!"));
+    }
     
 }
 
