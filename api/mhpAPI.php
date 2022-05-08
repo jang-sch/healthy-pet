@@ -25,9 +25,8 @@ if (isset($_POST["createAccount"])) {
         echo json_encode(array("error" => "no username/email/password sent."));
         return;
     } else {
-
-    // echo's back key userID or key "error" message as json encoded array
-    createUser();
+        // echo's back key userID or key "error" message as json encoded array
+        createUser();
     }
 }
 
@@ -74,6 +73,46 @@ elseif (isset($_POST["createPet"])) {
     }
 }
 
+/* branch retrieves specific pet header for specified pet's home page
+ * POST variables: "petHome", petID 
+ * returns: json encoded array from the getPetHomeHeader() function */
+elseif (isset($_POST["petHome"])) {
+    echo "you are in pet home page branch";
+    getPetHomeHeader();
+}
+
+/* branch lets user add a daily health note for a specific pet 
+ * POST variables: "petTodaysHealth", petID,  
+ * returns: json encoded array from the  */
+elseif (isset($_POST["petTodaysHealth"])) {
+    
+    header("Content-type: application/json");
+    unset($_POST["petTodaysHealth"]);
+    
+    echo "you are in the today's health branch";
+    // note: future plan incorporate session creds
+
+    $petID = $_POST["petID"];
+
+    // determine if a userID was sent prior to establishing connection
+    if($petID == NULL || $petID == "") {
+        echo json_encode("ERROR! Cannot create pet day log, no pet ID sent!!");
+    } else {
+        // ready to call create pet
+        addDailyHealth();
+    }
+
+}
+
+
+/* branch retrieves specific pet header for specified pet 
+ * POST variables: "addMed", petID,  
+ * returns: json encoded array from the getPetHomeDeets() function */
+elseif (isset($_POST["addMed"])) {
+    echo "you are in the addMed branch";
+}
+
+
 /* -------------------------------------GET VIEWS--------------------------- */
 
 /* branch handles obtaining pet header banner. React Native Client sends 
@@ -91,7 +130,7 @@ elseif(isset($_POST["petHeader"])) {
     header("Content-type: application/json");
     unset($_POST["petHeader"]);
     // echos back keys petName, ageYears, speciesName, sex, as json encoded array
-    petHeader();
+    getPetHomeHeader();
 }
 
 /* -------------------------------------- OTHER ---------------------------- */
