@@ -66,7 +66,7 @@ elseif (isset($_POST["createPet"])) {
 
     // determine if a userID was sent prior to establishing connection
     if($userID == NULL || $userID == "") {
-        echo json_encode("ERROR! Cannot create pet, no user ID sent!!");
+        echo json_encode(array("message" =>"ERROR! Cannot create pet, no user ID sent!!"));
     } else {
         // ready to call create pet
         createPet();
@@ -96,7 +96,7 @@ elseif (isset($_POST["petTodaysHealth"])) {
 
     // determine if a userID was sent prior to establishing connection
     if($petID == NULL || $petID == "") {
-        echo json_encode("ERROR! Cannot create pet day log, no pet ID sent!!");
+        echo json_encode(array("message" =>"ERROR! Cannot create pet day log, no pet ID sent!!"));
     } else {
         // ready to call create pet
         addDailyHealth();
@@ -109,7 +109,27 @@ elseif (isset($_POST["petTodaysHealth"])) {
  * POST variables: "addMed", petID,  
  * returns: json encoded array from the getPetHomeDeets() function */
 elseif (isset($_POST["addMed"])) {
+    header("Content-type: application/json");
+    unset($_POST["addMed"]);
+
+    $petID = $_POST["petID"];
+
     echo "you are in the addMed branch";
+
+    // determine if a userID was sent prior to establishing connection
+    if($petID == NULL || $petID == "") {
+        echo json_encode(array("message" =>"ERROR! Cannot add medication, no pet ID sent!!"));
+    } else {
+        // ready to call create pet
+        addMed();
+    }
+}
+
+/* branch retrieves specific pet header for specified pet 
+ * POST variables: "addMed", petID,  
+ * returns: json encoded array from the getPetHomeDeets() function */
+elseif (isset($_POST["addVacc"])) {
+    echo "you are in the addVacc branch";
 }
 
 
