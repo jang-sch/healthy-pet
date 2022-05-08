@@ -22,9 +22,9 @@ function createUser() {
     // establish connection once appropriate
     $conn = getConnection();
 
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $username = $_POST["username"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
     // createAccount to be a prepared statement, make prepared call to stored
@@ -54,33 +54,53 @@ function createUser() {
             return;
         }
     } else {
-        echo json_encode(array("error" => "an error has occurred!"));
+        echo json_encode(array("message" => "ERROR: an error has occurred creating account!"));
     }
 }
 
-/*
- *  function description:
+/*  function description: helper function to loginUser() to check if user is logged
  *
- *  POST params from Client:
- *      
- *  returns to main API --> Client:
- * 
- *  interacts with databse:
- *  
+ *  POST params from Client: N/A
+ *  returns to main API --> Client: N/A  
+ *  interacts with databse: N/A
  */
 function isLogged() {
+    // before we start session, set ID to the ID the client provided
+    session_id($_POST["session_id"]);
+    session_start();
 
+    // session variable "userID" is not set, so NOT logged in
+    if(!isset($_SESSION["userID"])) {
+        return false;
+    }
+    
+    // mismatched, so NOT logged in, do not proceed
+    if($_SESSION["userID"] != $_POST["userID"]) {
+        return false;
+    }
+
+    // otherwise, they ARE logged in
+    return true;
 }
 
-/*
- *  function description:
+/*  function description: login the user, verifies that passed email and pw are 
+ *  valid and match what is stored on the database. upon success, generates
+ *  json encoded array with userID's pet data for the user's "home page" to list
+ *  the pets.
  *
  *  POST params from Client:
+ *      email: required for user lookup
+ *      password: required to validate against
  *      
- *  returns to main API --> Client:
+ *  returns to main API --> Client: json encoded array of sets of following per pet
+ *      petID: IMPORTANT, needed to proceed to pet home pages from user home page
+ *      petPic: currently not incorporated, will be NULL
+ *      petName: for display
+ *      speciesName: for display
  * 
  *  interacts with databse:
- *  
+ *      queries user table
+ *      calls stored procedure
  */
 function loginUser() {
     $em = $_POST["email"];
@@ -88,33 +108,76 @@ function loginUser() {
 
     $conn = getConnection();
     $validateStmnt = $conn->prepare("SELECT * FROM user WHERE email=?");
-    $validateStmnt->bind_param('s', $em);
+    $validateStmnt->bind_param("s", $em);
     $validateStmnt->execute();
+    // upon execution get userID, username, email, and hashedPw; store returned values
     mysqli_stmt_bind_result($validateStmnt, $retUserID, $retUserName, $retEmail, $retPW);
     
     if ($validateStmnt->fetch()  && password_verify($password, $retPW)) {
-        echo json_encode("in login func at userFuncs, query executed and pw validated");
-
+        //echo json_encode("in login func at userFuncs, query executed and pw validated");
+        session_start();
+        
+        // set the session variables
+        $_SESSION["userID"] = $retUserID;
+        $_SESSION["email"] = $retEmail;
+        $_SESSION["username"] = $retUserName;
+        // NOTE: may NEED TO change way generate session id later; ALSO R/T LINE 130
+        $_SESSION["sessionID"] = session_id();
+        
         // in progress
+        // success so we can send them back session credentials
+        /* echo json_encode(array(
+            "userID" => $retUserID,
+            "email" => $retEmail,
+            "username" => $retUserName,
+            // NOTE: for now use session_id(), also r/t line 122
+            "sessionID" => session_id()
+        )); */
+
+        $validateStmnt->close();
+
+        // obtain user's pets tiles    
+        $result = $conn->prepare("CALL getUserPets(?)");
+        $result->bind_param("i", $retUserID);
+        $result->execute();
+    
+        $userPets = $result->get_result();
+    
+        $rows = [];
+        while($row = $userPets->fetch_assoc()) {
+            $rows [] = $row;
+        }
+        
+        // temp sanity check
+        $rows [] = array("message" => "login succeeeeeded");
+        
+        echo json_encode($rows);
+        return true;
 
     } else {
-        echo json_encode("ERROR: invalid email or password! Try again.");
+        echo json_encode(array("message" => "ERROR: invalid email or password! Try again."));
+        //echo json_encode("ERROR: invalid email or password! Try again.");
     }
 }
 
-/* branch handles creation of new pet profile. React Native Client sends 
- * following data via POST request:
+/* function description: handles creation of new pet profile. React Native 
+ * Client sends the following data via POST request:
  *
  * POST params:
+ *      -- required from client
  *      userID: an integer representing user's ID
  *      petID: an integer representing the pet's ID
+ *      petName: name
  *      speciesID: an integer from 1-9 that map to the 'species' table
- *      birthDate:
+ *      
+ *      -- optional for the client, can ben null or empty strings
+ *      birthDate: in format YYYY-MM-DD
  *      sex:
  *      microchipNum:
  *      petPic:
+ * 
  * returns to Client:
- *      JSON encoded array with 'petID'
+ *      JSON encoded array with 'petID' in format {"petID":1057}
  *      
  */
 function createPet() {
@@ -167,12 +230,44 @@ function createPet() {
             return;
         }
     } else {
-        echo json_encode(array("error" => "an error has occurred!"));
+        echo json_encode(array("message" => "ERROR: an error has occurred creating a pet!"));
     }
 }
 
-/*
- *  function description:
+/* ------------------------------VIEW FUNCS------------------------------- */
+
+/*  function description: currently not in use, used for building
+ *
+ *  POST params from Client:
+ *      userID: for procedure call
+ *        
+ *  returns to main API --> Client:
+ *      json encoded array with pet keys
+ * 
+ *  interacts with databse:
+ *      getUserPets() procedures
+ */
+function displayUserProfile() {
+    $userID = $_POST["userID"];
+    
+    $conn2 = getConnection();
+
+    $result = $conn2->prepare("CALL getUserPets(?)");
+    $result->bind_param("i", $userID);
+    $result->execute();
+
+    $userPets = $result->get_result();
+
+    $rows = [];
+    while($row = $userPets->fetch_assoc()) {
+        $rows [] = $row;
+    }
+
+    echo json_encode($rows);
+}
+
+/*  function description: for building
+ *      to display at the top of a pet's home page
  *
  *  POST params from Client:
  *      
