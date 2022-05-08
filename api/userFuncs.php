@@ -146,6 +146,7 @@ function loginUser() {
         $rows = [];
         while($row = $userPets->fetch_assoc()) {
             $rows [] = $row;
+            echo $row;
         }
         
         // temp sanity check
@@ -198,7 +199,7 @@ function createPet() {
     // to properly call the createPetProfile procedure on database
     foreach($pet_data as $key => $val) {
         //echo $key." is ".$val."\n";
-        if ($val == "") {
+        if ($val == ""|| $val == NULL) {
             $pet_data[$key] = NULL;
         }
         //echo $key." issss ".$val."\n";
@@ -208,7 +209,14 @@ function createPet() {
     $createPet = $conn->prepare("CALL createPetProfile(?, ?, ?, ?, ?, ?, ?)");
 
     // bind parameters, in variatic function, 's' for strings, 'i' for integers
-    $createPet->bind_param("isisisb", $pet_data["userID"], $pet_data["petName"], $pet_data["speciesID"],$pet_data["birthDate"],$pet_data["sex"],$pet_data["microchipNum"],$pet_data["petPic"]);
+    $createPet->bind_param("isisisb", 
+        $pet_data["userID"], 
+        $pet_data["petName"], 
+        $pet_data["speciesID"],
+        $pet_data["birthDate"],
+        $pet_data["sex"],
+        $pet_data["microchipNum"],
+        $pet_data["petPic"]);
 
     // now execute prepared stament
     if($createPet->execute()){
@@ -232,6 +240,117 @@ function createPet() {
     } else {
         echo json_encode(array("message" => "ERROR: an error has occurred creating a pet!"));
     }
+}
+
+/*  function description: to add a daily health note for specified pet
+ *
+ *  POST params from Client:
+ *      
+ *      
+ *  returns to main API --> Client:
+ * 
+ *  interacts with databse:
+ *  
+ */
+function addDailyHealth() {
+    $conn = getConnection();
+
+    // setup associative array to check if any sent POST variables are null
+    $day_data["petID"] = $_POST["petID"];
+    $day_data["logDay"] = $_POST["logDay"];
+    $day_data["eatingHabits"] = $_POST["eatingHabits"];
+    $day_data["treat"] = $_POST["treat"];
+    $day_data["vomit"] = $_POST["vomit"];
+    $day_data["urineHabits"] = $_POST["urineHabits"];
+    $day_data["poopHabits"] = $_POST["poopHabits"];
+    $day_data["exercise"] = $_POST["exercise"];
+    $day_data["sleepHabits"] = $_POST["sleepHabits"];
+    $day_data["dayNote"] = $_POST["dayNote"];
+
+    // if any POST variables were empty strings, convert to NULL in order
+    // to properly call the daily Health
+    foreach($day_data as $key => $val) {
+        //echo $key." is ".$val."\n";
+        if ($val == "" || $val == NULL) {
+            $day_data[$key] = NULL;
+        }
+        //echo $key." issss ".$val."\n";
+    }
+
+    // preparre statement prior to executing
+    $createDayNote = $conn->prepare("CALL addDailyHealth(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+ 
+    $createDayNote->bind_param("isssssssss",
+        $day_data["petID"],
+        $day_data["logDay"],
+        $day_data["eatingHabits"],
+        $day_data["treat"],
+        $day_data["vomit"],
+        $day_data["urineHabits"],
+        $day_data["poopHabits"],
+        $day_data["exercise"],
+        $day_data["sleepHabits"],
+        $day_data["dayNote"]);
+
+    // now execute prepared stament
+    if($createDayNote->execute()){
+        //echo json_encode(array("testmssg" => "testing123")); // for debugging
+        // binding results to local variables so can fetch them and see if null
+        mysqli_stmt_bind_result($createDayNote, $res_id, $res_error);
+        $createDayNote->fetch();
+        
+
+        // DELETE IF-ELSE LATER, not serving a purpose at this point
+        // do we have successful registratation--> check for duplicate email
+        if (is_null($res_id)) {
+            // error code/error message from the database
+            echo json_encode(array("error" => $res_error));
+            return;
+        }
+        // all is well, registration worked and you are given a user ID return
+        else {
+            echo json_encode(array("petID" => $res_id));
+            //echo json_encode(array("username" => $res_id));
+            return;
+        }
+    } else {
+        echo json_encode(array("message" => "ERROR: an error has occurred creating day log!"));
+    }
+}
+
+/*  function description: 
+ *      
+ *
+ *  POST params from Client:
+ *      petID int(10) NOT NULL
+ *      medName varchar(60) NOT NULL
+ *      medNotes varchar(300)
+ *      prescriber varchar(60), 
+ *      frequency varchar(60)
+ *      alarm time -- NULL for now 
+ *      
+ *  returns to main API --> Client:
+ * 
+ *  interacts with databse:
+ *  
+ */
+function addMed() {
+
+    
+}
+
+/*  function description: 
+ *      
+ *
+ *  POST params from Client:
+ *      
+ *  returns to main API --> Client:
+ * 
+ *  interacts with databse:
+ *  
+ */
+function addVacc() {
+    
 }
 
 /* ------------------------------VIEW FUNCS------------------------------- */
@@ -276,7 +395,7 @@ function displayUserProfile() {
  *  interacts with databse:
  *  
  */
-function petHeader() {
+function getPetHomeHeader() {
     $petID = $_POST['petID'];
     
     $conn = getConnection();
@@ -293,6 +412,20 @@ function petHeader() {
     }
 
     echo json_encode($rows);
+}
+
+/*  function description: comprehensive pet data, discuss with group what details want
+ *      
+ *
+ *  POST params from Client:
+ *      
+ *  returns to main API --> Client:
+ * 
+ *  interacts with databse:
+ *  
+ */
+function viewGeneralHealth() {
+    
 }
 
 
