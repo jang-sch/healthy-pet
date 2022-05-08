@@ -9,7 +9,7 @@ END;
 -- view pet header
 CREATE OR REPLACE PROCEDURE getPetHeader (pID int(10))
 BEGIN
-	SELECT name, age, species, gender
+	SELECT *
 	FROM pet_header
 	WHERE petID = pID;
 END;
@@ -17,7 +17,7 @@ END;
 -- view pet picture
 CREATE OR REPLACE PROCEDURE getPetPic (pID int(10))
 BEGIN
-	SELECT petPic
+	SELECT *
 	FROM pet_pic
 	WHERE petID = pID;
 END;
@@ -25,7 +25,7 @@ END;
 -- view for today's health
 CREATE OR REPLACE PROCEDURE getDaysHealth (pID int(10))
 BEGIN
-	SELECT logday, eatingHabits, treat, vomit, urineHabits, poopHabits, exercise, sleepHabits, dayNote
+	SELECT *
 	FROM todays_health_view
 	WHERE petID = pID;
 END;
@@ -33,7 +33,7 @@ END;
 -- view medications
 CREATE OR REPLACE PROCEDURE getMedications (pID int(10))
 BEGIN
-	SELECT medName, medNotes, prescriber, frequency
+	SELECT *
 	FROM med_view
 	WHERE petID = pID;
 END;
@@ -41,7 +41,7 @@ END;
 -- view vaccines 
 CREATE OR REPLACE PROCEDURE getPetVaccines (pID int(10))
 BEGIN
-	SELECT vaccName, vaccDate, vaccNote
+	SELECT *
 	FROM vacc_view
 	WHERE petID = pID;
 END;
@@ -49,7 +49,7 @@ END;
 -- view vet info
 CREATE OR REPLACE PROCEDURE getVetView (pID int(10))
 BEGIN
-	SELECT facilityName, address, phone, website, notes
+	SELECT *
 	FROM vet_view
 	WHERE petID = pID;
 END;
@@ -65,7 +65,7 @@ END;
 -- view list of vaccines 
 CREATE OR REPLACE PROCEDURE getVaccList (animalID int(10)) 
 BEGIN 
-	SELECT vaccName 
+	SELECT *
 	FROM list_vacc_view 
 	WHERE speciesID = animalID; 
 END; 
@@ -73,7 +73,7 @@ END;
 -- view list of user's pets
 CREATE OR REPLACE PROCEDURE getUserPets (usrID int(10))
 BEGIN 
-	SELECT petPic, petName, speciesName
+	SELECT *
 	FROM user_pet_profiles
 	WHERE userID = usrID;
 END;
