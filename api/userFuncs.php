@@ -49,12 +49,12 @@ function createUser() {
         }
         // all is well, registration worked and you are given a user ID return
         else {
-            echo json_encode(array("userID" => $res_id));
+            echo json_encode(array("user_id" => $res_id));
             //echo json_encode(array("username" => $res_id));
             return;
         }
     } else {
-        echo json_encode(array("message" => "ERROR: an error has occurred creating account!"));
+        echo json_encode(array("error" => "ERROR: an error has occurred creating account!"));
     }
 }
 
@@ -171,7 +171,7 @@ function loginUser() {
  *      petName: name
  *      speciesID: an integer from 1-9 that map to the 'species' table
  *      
- *      -- optional for the client, can ben null or empty strings
+ *      -- optional for the client, MUST BE null or empty strings
  *      birthDate: in format YYYY-MM-DD
  *      sex:
  *      microchipNum:
@@ -242,15 +242,29 @@ function createPet() {
     }
 }
 
-/*  function description: to add a daily health note for specified pet
+/*  function description: to add a daily health log of symptoms and pet 
+ *  behavior for specified pet.
  *
- *  POST params from Client:
- *      
- *      
+ *  POST params from Client: 
+ *      petID: REQUIRED, NOT NULL
+ * 
+ *      --following MUST be in POST, but can be null/empty strings--
+ *      logDay: 
+ *      eatingHabits:
+ *      treat:
+ *      vomit:
+ *      urineHabits:
+ *      poopHabits:
+ *      exercise:
+ *      sleepHabits:
+ *      dayNote:
+ *        
  *  returns to main API --> Client:
+ *      JSON encoded array with error message if error occured, otherwise
+ *      the error message will be NULL
  * 
  *  interacts with databse:
- *  
+ *      databases's stored procedure addDailyHealth(...)
  */
 function addDailyHealth() {
     $conn = getConnection();
@@ -304,10 +318,10 @@ function addDailyHealth() {
         // do we have successful registratation--> check for duplicate email
         if (is_null($res_id)) {
             // error code/error message from the database
-            echo json_encode(array("error" => $res_error));
+            echo json_encode(array("message" => $res_error));
             return;
         }
-        // all is well, registration worked and you are given a user ID return
+        // pet addition worked
         else {
             echo json_encode(array("petID" => $res_id));
             //echo json_encode(array("username" => $res_id));
@@ -318,22 +332,26 @@ function addDailyHealth() {
     }
 }
 
-/*  function description: 
+/*  function description: called by main API file to add a medication
+ *  for the specified pet by calling the database's stored procedure
  *      
  *
  *  POST params from Client:
- *      petID int(10) NOT NULL
- *      medName varchar(60) NOT NULL
- *      medNotes varchar(300)
- *      prescriber varchar(60), 
- *      frequency varchar(60)
- *      alarm time -- NULL for now 
+ *      petID: int(10) NOT NULL
+ *      medName: varchar(60) NOT NULL
+ *      
+ *      -- can be NULL or empty but MUST be in POST
+ *      medNotes: varchar(300)
+ *      prescriber: varchar(60)
+ *      frequency: varchar(60)
+ *      alarm: time -- NULL for now 
  *      
  *  returns to main API --> Client:
- *      JSON encoded array
+ *      JSON encoded array with error message if error occured, otherwise
+ *      the error message will be NULL
  * 
  *  interacts with databse:
- *      stored database procedure addMed(...) 
+ *      stored database procedure named addMed(...) 
  *  
  */
 function addMed() {
@@ -356,7 +374,7 @@ function addMed() {
         //echo $key." issss ".$val."\n";
     }
 
-    // ready to start prepping query
+    // ready to start prepping query to db
     $addMedQuery = $conn->prepare("CALL addMed(?, ?, ?, ?, ?, ?)");
 
     // bind parameters, 's' for strings, 'i' for integers
@@ -379,20 +397,20 @@ function addMed() {
         // do we have successful registratation--> check for duplicate email
         if (is_null($res_id)) {
             // error code/error message from the database
-            echo json_encode(array("error" => $res_error));
+            echo json_encode(array("message" => $res_error));
             return;
         }
-
     } else {
         echo json_encode(array("message" => "ERROR: an error occurred adding medication!"));
     }
     
 }
 
-/*  function description: 
- *      
+/*  function description: called by main api file to add vaccination record
+ *  for specific pet      
  *
  *  POST params from Client:
+ *      
  *      
  *  returns to main API --> Client:
  * 
