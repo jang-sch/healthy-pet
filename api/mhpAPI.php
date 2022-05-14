@@ -31,7 +31,7 @@ if (isset($_POST["createAccount"])) {
 }
 
 /* branch handles LOGGING IN. React Native Client sends POST variables: 
- * "login", username, email, password. returns mesage and pet json array */
+ * "login", email, password. returns mesage and pet json array */
 elseif (isset($_POST["login"])) {
     header("Content-type: application/json");
     unset($_POST["login"]);
@@ -161,8 +161,15 @@ elseif(isset($_POST["petHeader"])) {
  elseif(isset($_POST["tostada"])) {
     header("Content-type: application/json");
     unset($_POST["tostada"]);
+
+    $title = $_POST["title"];
+    $content = $_POST["content"];
+
+    echo $title;
+    echo $content;
+    
     $result = [];
-    $result []= array("id" => 1, "response" => "SUCCESS! You requested a tostada  \u{1F32E}");
+    $result []= array("id" => 1, "content" => "SUCCESS! You requested a tostada  \u{1F32E}", "title"=> "the TITLE");
     echo json_encode($result);
 }
 
